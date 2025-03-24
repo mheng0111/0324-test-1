@@ -20,8 +20,7 @@
   <div class="form-container">
     <h2>會員註冊</h2>
     <form id="registerForm">
-      <label>User ID</label>
-      <input type="text" id="userId" readonly style="background-color: #e9ecef;">
+      <label>User ID</label><input type="text" id="userId" readonly style="background-color: #e9ecef;">
       <label>姓名</label><input type="text" id="name" required>
       <label>暱稱</label><input type="text" id="nickname" required>
       <label>手機號碼</label><input type="tel" id="phone" required placeholder="09xxxxxxxx">
@@ -40,8 +39,9 @@
     const liffId = '2007111391-g8NYprrW';
     const sheetURL = 'https://script.google.com/macros/s/AKfycbxen9S7ndTkTBrbI_CBFFwBpFxapdcfG4aPPLpIsZHpjsMJocd3ILmCHShjL5JYFT2p/exec';
 
+    // ✅ 全台灣縣市鄉鎮區資料，來自你上傳的 districtMap.js
     const cityDistrictMap = {
-       "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
+  "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
   "新北市": ["板橋區", "三重區", "中和區", "永和區", "新莊區", "新店區", "土城區", "蘆洲區", "樹林區", "鶯歌區", "三峽區", "淡水區", "汐止區", "瑞芳區", "五股區", "泰山區", "林口區", "深坑區", "石碇區", "坪林區", "三芝區", "石門區", "八里區", "平溪區", "雙溪區", "貢寮區"],
   "台中市": ["中區", "東區", "南區", "西區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "東勢區", "大甲區", "清水區", "沙鹿區", "梧棲區", "后里區", "神岡區", "潭子區", "大雅區", "新社區", "石岡區", "外埔區", "大安區", "烏日區", "大肚區", "龍井區", "和平區"],
   "台南市": ["中西區", "東區", "南區", "北區", "安平區", "安南區", "永康區", "歸仁區", "新化區", "左鎮區", "玉井區", "楠西區", "南化區", "仁德區", "關廟區", "龍崎區", "官田區", "麻豆區", "佳里區", "西港區", "七股區", "將軍區", "學甲區", "北門區", "新營區", "後壁區", "白河區", "東山區", "六甲區", "下營區", "柳營區", "鹽水區", "善化區", "大內區", "山上區", "新市區", "安定區"],
@@ -138,10 +138,10 @@
       }
 
       const data = {
-        userId: userId,
+        userId,
         name: document.getElementById('name').value.trim(),
         nickname: document.getElementById('nickname').value.trim(),
-        phone: phone,
+        phone,
         email: document.getElementById('email').value.trim(),
         birthday: document.getElementById('birthday').value,
         city: citySelect.value,
@@ -192,4 +192,3 @@
 </body>
 
 </html>
-
