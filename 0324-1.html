@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>會員註冊</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; }
+    .form-container { background: #fff; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; }
+    label { font-weight: bold; display: block; margin-top: 15px; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { width: 100%; padding: 15px; background-color: #00C300; color: white; font-size: 16px; margin-top: 20px; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>會員註冊</h2>
+    <form id="registerForm">
+      <label>LINE UserID（系統自動帶入）</label>
+      <input type="text" id="userId" name="userId" readonly>
+
+      <label>姓名</label>
+      <input type="text" id="name" required>
+
+      <label>暱稱</label>
+      <input type="text" id="nickname" required>
+
+      <label>電話</label>
+      <input type="tel" id="phone" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>生日</label>
+      <input type="date" id="birthday" required>
+
+      <label>縣市</label>
+      <select id="city" required>
+        <option value="">請選擇</option>
+        <option value="台北市">台北市</option>
+        <option value="新北市">新北市</option>
+        <option value="台中市">台中市</option>
+        <option value="高雄市">高雄市</option>
+      </select>
+
+      <label>區鄉鎮</label>
+      <input type="text" id="district" required>
+
+      <label>車牌1</label>
+      <input type="text" id="plate1">
+
+      <label>車牌2</label>
+      <input type="text" id="plate2">
+
+      <label>車牌3</label>
+      <input type="text" id="plate3">
+
+      <button type="submit">送出</button>
+    </form>
+  </div>
+
+  <script>
+    const liffId = '2007111391-g8NYprrW';
+    const sheetURL = 'https://script.google.com/macros/s/AKfycbzxNINE6sjl44W1sjAprzZPbk4nZ0QL16DduDAwXYOO4QRf2iVMRzJ3JfQCvAZVC94-/exec';
+
+    async function initLiff() {
+      await liff.init({ liffId });
+      if (!liff.isLoggedIn()) liff.login();
+      const profile = await liff.getProfile();
+      document.getElementById('userId').value = profile.userId;
+    }
+
+    initLiff();
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        userId: document.getElementById('userId').value,
+        name: document.getElementById('name').value,
+        nickname: document.getElementById('nickname').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        birthday: document.getElementById('birthday').value,
+        city: document.getElementById('city').value,
+        district: document.getElementById('district').value,
+        plate1: document.getElementById('plate1').value.toUpperCase().trim(),
+        plate2: document.getElementById('plate2').value.toUpperCase().trim(),
+        plate3: document.getElementById('plate3').value.toUpperCase().trim()
+      };
+
+      try {
+        const response = await fetch(sheetURL, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await response.json();
+        alert(result.message || "✅ 資料送出成功！");
+        liff.closeWindow();
+      } catch (err) {
+        alert("❌ 送出失敗：" + err);
+      }
+    });
+  </script>
+</body>
+</html>
