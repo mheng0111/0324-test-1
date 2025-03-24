@@ -41,9 +41,9 @@
     const sheetURL = 'https://script.google.com/macros/s/AKfycbxen9S7ndTkTBrbI_CBFFwBpFxapdcfG4aPPLpIsZHpjsMJocd3ILmCHShjL5JYFT2p/exec';
 
     const cityDistrictMap = {
-      "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
-      "新北市": ["板橋區", "三重區", "中和區", "永和區", "新莊區", "新店區", "土城區", "蘆洲區", "樹林區", "鶯歌區", "三峽區", "淡水區", "汐止區", "瑞芳區", "五股區", "泰山區", "林口區", "深坑區", "石碇區", "坪林區", "三芝區", "石門區", "八里區", "平溪區", "雙溪區", "貢寮區"],
-      "台中市": ["中區", "東區", "南區", "西區", "北區", "西屯區", "南屯區", "北屯區", "豐原區", "大里區", "太平區", "東勢區", "大甲區", "清水區", "沙鹿區", "梧棲區", "后里區", "神岡區", "潭子區", "大雅區", "新社區", "石岡區", "外埔區", "大安區", "烏日區", "大肚區"]
+      "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區"],
+      "新北市": ["板橋區", "三重區", "中和區", "永和區"],
+      "台中市": ["中區", "東區", "南區", "西區", "北區"]
     };
 
     const citySelect = document.getElementById('city');
@@ -74,7 +74,7 @@
     });
 
     window.onload = () => {
-      renderCityOptions(); // ✅ 重點：先渲染縣市
+      renderCityOptions();
       citySelect.selectedIndex = 0;
       citySelect.dispatchEvent(new Event('change'));
     };
@@ -102,7 +102,13 @@
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (submitBtn.disabled) return;
+
+      const userId = document.getElementById('userId').value;
+      if (!userId) {
+        alert('❌ 無法取得 LINE User ID，請從 LINE 內開啟');
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.textContent = '送出中...';
 
@@ -114,7 +120,7 @@
       }
 
       const data = {
-        userId: document.getElementById('userId').value,
+        userId: userId,
         name: document.getElementById('name').value.trim(),
         nickname: document.getElementById('nickname').value.trim(),
         phone: phone,
@@ -128,32 +134,32 @@
       };
 
       console.log('送出資料:', data);
-
-      if (!data.userId) {
-        alert('❌ 無法取得 LINE User ID，請從 LINE 內開啟');
-        resetSubmitBtn();
-        return;
-      }
+      console.log('送出網址:', sheetURL);
 
       try {
         const response = await fetch(sheetURL, {
           method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
 
         console.log('Response status:', response.status);
+
+        if (!response.ok) throw new Error(`❌ 伺服器錯誤，狀態碼：${response.status}`);
+
         const result = await response.json();
         console.log('GAS 回傳:', result);
 
-        if (response.ok) {
-          alert(result.message || "✅ 資料送出成功！");
+        if (result.message) {
+          alert(result.message);
           liff.closeWindow();
         } else {
-          throw new Error(result.message || '❌ 送出失敗');
+          alert('✅ 資料送出成功！');
+          liff.closeWindow();
         }
+
       } catch (err) {
-        console.error('送出失敗:', err);
+        console.error('❌ 送出失敗:', err);
         alert("❌ 送出失敗：" + err.message);
       } finally {
         resetSubmitBtn();
@@ -168,3 +174,4 @@
 </body>
 
 </html>
+
