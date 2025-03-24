@@ -39,7 +39,6 @@
     const liffId = '2007111391-g8NYprrW';
     const sheetURL = 'https://script.google.com/macros/s/AKfycbxen9S7ndTkTBrbI_CBFFwBpFxapdcfG4aPPLpIsZHpjsMJocd3ILmCHShjL5JYFT2p/exec';
 
-    // ✅ 全台灣縣市鄉鎮區資料，來自你上傳的 districtMap.js
     const cityDistrictMap = {
   "台北市": ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
   "新北市": ["板橋區", "三重區", "中和區", "永和區", "新莊區", "新店區", "土城區", "蘆洲區", "樹林區", "鶯歌區", "三峽區", "淡水區", "汐止區", "瑞芳區", "五股區", "泰山區", "林口區", "深坑區", "石碇區", "坪林區", "三芝區", "石門區", "八里區", "平溪區", "雙溪區", "貢寮區"],
@@ -107,6 +106,7 @@
         const profile = await liff.getProfile();
         console.log('取得 LINE Profile:', profile);
         if (profile?.userId) {
+          console.log('✅ 取得 userId:', profile.userId);
           document.getElementById('userId').value = profile.userId;
         } else {
           alert('❌ 無法取得 LINE User ID，請從 LINE 內開啟');
@@ -122,6 +122,7 @@
       e.preventDefault();
 
       const userId = document.getElementById('userId').value;
+      console.log('送出 userId:', userId);
       if (!userId) {
         alert('❌ 無法取得 LINE User ID，請從 LINE 內開啟');
         return;
@@ -162,20 +163,15 @@
         });
 
         console.log('Response status:', response.status);
-
-        if (!response.ok) throw new Error(`❌ 伺服器錯誤，狀態碼：${response.status}`);
-
         const result = await response.json();
         console.log('GAS 回傳:', result);
 
-        if (result.message) {
-          alert(result.message);
+        if (response.ok) {
+          alert(result.message || '✅ 資料送出成功！');
           liff.closeWindow();
         } else {
-          alert('✅ 資料送出成功！');
-          liff.closeWindow();
+          throw new Error(result.message || '❌ 送出失敗');
         }
-
       } catch (err) {
         console.error('❌ 送出失敗:', err);
         alert("❌ 送出失敗：" + err.message);
