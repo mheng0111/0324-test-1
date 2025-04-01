@@ -7,7 +7,8 @@ import {
   Search,
   Users,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import liff from "@line/liff"; // Import LIFF SDK
 
 // Define the service card data for mapping
 const topServiceCards = [
@@ -47,6 +48,21 @@ const bottomServiceCards = [
 ];
 
 export default function Frame(): JSX.Element {
+  // Initialize LIFF
+  useEffect(() => {
+    async function initializeLiff() {
+      try {
+        await liff.init({ liffId: "2007183090-4a5YRa2R" }); // Updated LIFF ID
+        if (!liff.isLoggedIn()) {
+          liff.login(); // Redirect to LINE login if not logged in
+        }
+      } catch (error) {
+        console.error("LIFF initialization failed", error);
+      }
+    }
+    initializeLiff();
+  }, []);
+
   return (
     <div className="bg-white flex flex-row justify-center w-full">
       <div className="bg-white overflow-hidden w-full max-w-[2500px]">
