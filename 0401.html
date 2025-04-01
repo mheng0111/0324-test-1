@@ -1,0 +1,118 @@
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  BookOpen,
+  Coins,
+  Headphones,
+  PiggyBank,
+  Search,
+  Users,
+} from "lucide-react";
+import React from "react";
+
+// Define the service card data for mapping
+const topServiceCards = [
+  {
+    icon: <Users className="h-16 w-16 text-black" />,
+    titleChinese: "加入會員",
+    titleEnglish: "Join Membership",
+  },
+  {
+    icon: <BookOpen className="h-16 w-16 text-black" />,
+    titleChinese: "據點查詢",
+    titleEnglish: "Location Search",
+  },
+  {
+    icon: <PiggyBank className="h-16 w-16 text-black" />,
+    titleChinese: "點數查詢",
+    titleEnglish: "Points Balance Inquiry",
+  },
+];
+
+const bottomServiceCards = [
+  {
+    icon: <Search className="h-12 w-12 text-white" />,
+    titleChinese: "了解更多",
+    titleEnglish: "Learn More",
+  },
+  {
+    icon: <Coins className="h-12 w-12 text-white" />,
+    titleChinese: "點數兌換",
+    titleEnglish: "Points Redemption",
+  },
+  {
+    icon: <Headphones className="h-12 w-12 text-white" />,
+    titleChinese: "真人客服",
+    titleEnglish: "Live Customer Service",
+  },
+];
+
+export default function Frame(): JSX.Element {
+  return (
+    <div className="bg-white flex flex-row justify-center w-full">
+      <div className="bg-white overflow-hidden w-full max-w-[2500px]">
+        <div className="relative">
+          {/* Header section with logo */}
+          <div className="w-full h-[500px] bg-[#2D3034] relative">
+            {/* KCX large background text */}
+            <div className="absolute inset-0 flex justify-center items-center">
+              <h1 className="text-[400px] font-bold text-gray-400/80">KCX</h1>
+            </div>
+
+            {/* Company logo and name */}
+            <div className="absolute top-10 left-10 flex flex-col">
+              <div className="border border-white w-12 h-12 flex items-center justify-center mb-2">
+                <span className="text-white text-xs">NO₂</span>
+              </div>
+              <div className="text-white">
+                <p className="font-bold">KochChemie</p>
+                <p className="text-sm">ExcellenceForExperts.</p>
+              </div>
+            </div>
+
+            {/* Main service cards */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-4 px-4 transform translate-y-1/2">
+              {topServiceCards.map((service, index) => (
+                <Card
+                  key={index}
+                  className="w-80 h-64 bg-gray-100 border-4 border-white shadow-lg"
+                >
+                  <CardContent className="flex flex-col items-center justify-center h-full p-6">
+                    <div className="mb-4">{service.icon}</div>
+                    <h2 className="text-2xl font-bold text-center">
+                      {service.titleChinese}
+                    </h2>
+                    <p className="text-sm text-gray-600 text-center">
+                      {service.titleEnglish}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom section with road and additional services */}
+          <div className="w-full h-[300px] bg-gradient-to-b from-gray-400 to-gray-600 flex items-end">
+            {/* Road marking */}
+            <div className="w-full h-20 bg-gray-700 flex justify-center">
+              <div className="w-3/4 flex justify-between items-center">
+                {bottomServiceCards.map((service, index) => (
+                  <div key={index} className="flex flex-col items-center">
+                    <div className="bg-gray-700 rounded-full p-3 mb-2">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-white text-lg font-medium text-center">
+                      {service.titleChinese}
+                    </h3>
+                    <p className="text-gray-300 text-xs text-center">
+                      {service.titleEnglish}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
