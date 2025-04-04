@@ -1,279 +1,165 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LINE LIFF 六按鍵應用</title>
+    <title>Line Liff 圖文選單</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         }
         
         body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #f7f7f7;
+            padding: 10px;
+        }
+        
+        .menu-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1px;
+            background-color: #ddd;
+        }
+        
+        .menu-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
-            padding: 16px;
-        }
-        
-        .header {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 16px;
-            padding: 8px;
-            background-color: #00B900;
-            color: white;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        
-        .button-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-            max-width: 500px;
-        }
-        
-        .action-button {
-            height: 50px;
-            border-radius: 8px;
-            border: none;
-            background-color: #ffffff;
-            color: #1f1f1f;
-            font-size: 16px;
-            font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .action-button:hover {
-            background-color: #f2f2f2;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .action-button:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .action-button.primary {
-            background-color: #00B900;
-            color: white;
-        }
-        
-        .action-button.secondary {
-            background-color: #4a89dc;
-            color: white;
-        }
-        
-        .action-button.danger {
-            background-color: #ed5565;
-            color: white;
-        }
-        
-        .status {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 15px 5px;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            height: 100px;
+        }
+        
+        .menu-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .button-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #06c755; /* Line绿色 */
+        }
+        
+        .button-text {
+            font-size: 12px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="header">PostgreSQL 資料庫工具</div>
-    
-    <!-- 會員功能區域 - 默認隱藏 -->
-    <div class="button-container" id="member-functions" style="display: none;">
-        <button class="action-button primary" id="btn-connect">連接資料庫</button>
-        <button class="action-button" id="btn-query">執行查詢</button>
-        <button class="action-button secondary" id="btn-export">匯出資料</button>
-        <button class="action-button secondary" id="btn-import">匯入資料</button>
-        <button class="action-button" id="btn-backup">資料備份</button>
-        <button class="action-button danger" id="btn-close">關閉應用</button>
-    </div>
-    
-    <!-- 訪客區域 - 默認顯示 -->
-    <div class="button-container" id="guest-area">
-        <div style="text-align: center; padding: 20px; background: white; border-radius: 8px; margin-bottom: 15px;">
-            <p>您尚未加入會員，無法使用完整功能</p>
+    <div class="menu-container">
+        <div class="button-grid">
+            <div class="menu-button" onclick="handleButtonClick(1)">
+                <div class="button-icon">🛒</div>
+                <div class="button-text">商品目錄</div>
+            </div>
+            <div class="menu-button" onclick="handleButtonClick(2)">
+                <div class="button-icon">🎁</div>
+                <div class="button-text">優惠活動</div>
+            </div>
+            <div class="menu-button" onclick="handleButtonClick(3)">
+                <div class="button-icon">📅</div>
+                <div class="button-text">預約服務</div>
+            </div>
+            <div class="menu-button" onclick="handleButtonClick(4)">
+                <div class="button-icon">🎫</div>
+                <div class="button-text">會員卡</div>
+            </div>
+            <div class="menu-button" onclick="handleButtonClick(5)">
+                <div class="button-icon">📞</div>
+                <div class="button-text">聯絡我們</div>
+            </div>
+            <div class="menu-button" onclick="handleButtonClick(6)">
+                <div class="button-icon">❓</div>
+                <div class="button-text">常見問題</div>
+            </div>
         </div>
-        <button class="action-button primary" id="btn-register" style="grid-column: span 2;">加入會員</button>
     </div>
-    
-    <div class="status" id="status-display">
-        歡迎使用 PostgreSQL 資料庫工具！
-    </div>
-    
+
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-        // 初始化 LIFF
-        document.addEventListener('DOMContentLoaded', () => {
+        // 初始化LIFF
+        document.addEventListener('DOMContentLoaded', function() {
             initializeLiff();
         });
-        
+
         function initializeLiff() {
-            const liffId = "YOUR_LIFF_ID"; // 替換為您的 LIFF ID
+            // 替换为您的LIFF ID
+            const liffId = "YOUR_LIFF_ID";
             
             liff.init({
                 liffId: liffId,
                 withLoginOnExternalBrowser: true
-            })
-            .then(() => {
-                // 檢查 LIFF 是否在 LINE 內部開啟
-                if (liff.isInClient()) {
-                    updateStatus("LIFF 應用已初始化");
-                    
-                    // 獲取用戶 LINE 個人資料
-                    liff.getProfile()
-                    .then(profile => {
-                        const userId = profile.userId;
-                        
-                        // 檢查用戶是否為會員
-                        checkMemberStatus(userId);
-                    })
-                    .catch(err => {
-                        updateStatus(`無法獲取用戶資料: ${err.message}`);
-                    });
-                } else {
-                    updateStatus("請在 LINE 應用程式內開啟此連結");
-                }
-                
-                setupButtonListeners();
-            })
-            .catch((error) => {
-                updateStatus(`LIFF 初始化失敗: ${error.message}`);
+            }).then(() => {
+                console.log("LIFF 初始化成功");
+            }).catch((err) => {
+                console.error("LIFF 初始化失敗", err);
             });
         }
-        
-        // 檢查會員狀態
-        function checkMemberStatus(userId) {
-            // 這裡應該使用實際的 API 呼叫檢查用戶是否是會員
-            // 示例中使用模擬檢查，在實際應用中替換為真實 API 呼叫
+
+        function handleButtonClick(buttonId) {
+            console.log(`按鈕 ${buttonId} 被點擊了`);
             
-            // 模擬 API 呼叫
-            // const apiUrl = `https://your-api.com/check-member?userId=${userId}`;
-            // fetch(apiUrl)...
-            
-            // 示例: 使用 LocalStorage 模擬已註冊會員 (測試用)
-            const registeredMembers = localStorage.getItem('registeredMembers') || '[]';
-            const members = JSON.parse(registeredMembers);
-            
-            if (members.includes(userId)) {
-                // 用戶是會員，顯示會員功能
-                showMemberFunctions();
-                updateStatus(`歡迎回來，尊貴的會員！`);
-            } else {
-                // 用戶不是會員，顯示訪客界面
-                hideMemberFunctions();
-                updateStatus(`您尚未加入會員，部分功能受限`);
+            // 根据按钮ID执行不同操作
+            switch(buttonId) {
+                case 1:
+                    // 商品目录
+                    sendMessage("查看商品目錄");
+                    break;
+                case 2:
+                    // 优惠活动
+                    sendMessage("查看優惠活動");
+                    break;
+                case 3:
+                    // 预约服务
+                    sendMessage("我要預約服務");
+                    break;
+                case 4:
+                    // 会员卡
+                    sendMessage("查看會員卡");
+                    break;
+                case 5:
+                    // 联系我们
+                    sendMessage("聯絡客服");
+                    break;
+                case 6:
+                    // 常见问题
+                    sendMessage("常見問題");
+                    break;
             }
         }
-        
-        function setupButtonListeners() {
-            // 連接資料庫按鈕
-            document.getElementById('btn-connect').addEventListener('click', () => {
-                updateStatus("正在連接到 PostgreSQL 資料庫...");
-                
-                // 模擬連線延遲
-                setTimeout(() => {
-                    updateStatus("成功連接到資料庫 DB_NAME");
-                }, 1000);
-            });
-            
-            // 執行查詢按鈕
-            document.getElementById('btn-query').addEventListener('click', () => {
-                if (!liff.isInClient()) {
-                    updateStatus("此功能僅在 LINE 應用內可用");
-                    return;
-                }
-                
-                updateStatus("執行 SQL 查詢中...");
-                
-                // 模擬查詢
-                setTimeout(() => {
-                    updateStatus("查詢完成，共獲取 42 筆資料");
-                }, 1200);
-            });
-            
-            // 匯出資料按鈕
-            document.getElementById('btn-export').addEventListener('click', () => {
-                updateStatus("準備匯出資料...");
-                
-                // 模擬匯出程序
-                setTimeout(() => {
-                    updateStatus("資料已匯出至 LINE 保存空間");
-                    
-                    if (liff.isInClient()) {
-                        liff.shareTargetPicker([
-                            {
-                                "type": "text",
-                                "text": "PostgreSQL 資料匯出完成！"
-                            }
-                        ])
-                        .then(() => {
-                            updateStatus("已共享匯出結果");
-                        })
-                        .catch((error) => {
-                            updateStatus(`共享失敗: ${error.message}`);
-                        });
-                    }
-                }, 1500);
-            });
-            
-            // 匯入資料按鈕
-            document.getElementById('btn-import').addEventListener('click', () => {
-                updateStatus("準備匯入資料...");
-                
-                // 模擬匯入程序
-                setTimeout(() => {
-                    updateStatus("資料匯入成功");
-                }, 1500);
-            });
-            
-            // 資料備份按鈕
-            document.getElementById('btn-backup').addEventListener('click', () => {
-                updateStatus("正在備份資料庫...");
-                
-                // 模擬備份程序
-                setTimeout(() => {
-                    updateStatus("資料庫備份完成");
-                }, 2000);
-            });
-            
-            // 關閉應用按鈕
-            document.getElementById('btn-close').addEventListener('click', () => {
-                if (liff.isInClient()) {
-                    updateStatus("正在關閉應用...");
-                    setTimeout(() => {
-                        liff.closeWindow();
-                    }, 1000);
-                } else {
-                    updateStatus("此功能僅在 LINE 應用內可用");
-                }
-            });
-        }
-        
-        function updateStatus(message) {
-            const statusElement = document.getElementById('status-display');
-            statusElement.textContent = message;
+
+        function sendMessage(text) {
+            if (liff.isInClient()) {
+                liff.sendMessages([{
+                    type: 'text',
+                    text: text
+                }]).then(() => {
+                    console.log("訊息已送出");
+                    liff.closeWindow();
+                }).catch((error) => {
+                    console.error("發送訊息失敗", error);
+                });
+            } else {
+                alert("此功能只能在 LINE APP 內使用");
+            }
         }
     </script>
 </body>
